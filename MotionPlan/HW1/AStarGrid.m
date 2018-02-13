@@ -110,28 +110,26 @@ while true
     % Visit all of the neighbors around the current node and update the
     % entries in the map, f, g and parent arrays
     %
-    actions = {[1, 0], [-1, 0], [0, 1], [0, -1]};
-    for k = 1:length(actions)
-        n_i = i + actions{k}(1);
-        n_j = j + actions{k}(2);
-        % check n_i, n_j in the boundry
-        if (n_i < 1 || n_j < 1 || n_i > nrows || n_j > ncols)
+    % possible neighbors
+    actions = {[1, 0]; [0, 1]; [-1, 0]; [0, -1]};
+    for k = 1 : length(actions)
+        ni = i + actions{k}(1);
+        nj = j + actions{k}(2);
+        % check if out of bound
+        if (ni < 1 || ni > nrows || nj < 1 || nj > ncols)
             continue;
-        end
-        nei = sub2ind(size(map), n_i,  n_j);
-        if (map(nei) == 1 || map(nei) == 6)
-            if (g(nei) > g(current) + H(nei) - H(current));
-                g(nei) = g(current) + H(nei) - H(current);
-                f(nei) = g(nei) + H(nei);
-                parent(nei) = current;
-                map(nei) = 4;
-            end
-        end
-    end
-    
+        end;
+        next = sub2ind(size(map), ni, nj);
+        if (map(next) == 1 || map(next) == 6)
+            g(next) = g(current) + 1;
+            f(next) = g(next) + H(next);
+            map(next) = 4;
+            parent(next) = current;
+        end;
+    end;
     numExpanded = numExpanded + 1;
- 
-
+    
+    
     %*********************************************************************
     
     

@@ -97,23 +97,22 @@ while true
     % Visit each neighbor of the current node and update the map, distances
     % and parent tables appropriately.
     actions = {[1, 0], [-1, 0], [0, 1], [0, -1]};
-    for k = 1:length(actions)
-        n_i = i + actions{k}(1);
-        n_j = j + actions{k}(2);
-        % check n_i, n_j in the boundry
-        if (n_i < 1 || n_j < 1 || n_i > nrows || n_j > ncols)
+    for m = 1 : length(actions) 
+        i_next = i + actions{m}(1);
+        j_next = j + actions{m}(2);
+        if (i_next < 1 || i_next > nrows || j_next < 1 || j_next > ncols)
             continue;
-        end
-        nei = sub2ind(size(map), n_i, n_j);
-        
-        if (map(nei) == 1 || map(nei) == 6)
-            distanceFromStart(nei) = min_dist + 1;
-            map(nei) = 4;
-            parent(nei) = current;          
-        end
-    end
-       
+        end;
+        next = sub2ind(size(map), i_next, j_next);
+        if (map(next) == 1 || map(next) == 6)   
+            distanceFromStart(next) = min_dist + 1;
+            map(next) = 4;
+            parent(next) = current;
+        end;
+    end;
     numExpanded = numExpanded + 1;
+    
+    
     
     %*********************************************************************
 
